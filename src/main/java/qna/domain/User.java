@@ -9,9 +9,7 @@ import javax.persistence.*;
 import javax.persistence.Id;
 
 import org.springframework.data.annotation.*;
-import org.springframework.data.jpa.domain.support.*;
 
-@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "user")
 public class User {
