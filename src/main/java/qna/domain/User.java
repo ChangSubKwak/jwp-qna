@@ -2,16 +2,43 @@ package qna.domain;
 
 import qna.UnAuthorizedException;
 
+import java.time.*;
 import java.util.Objects;
 
+import javax.persistence.*;
+import javax.persistence.Id;
+
+import org.springframework.data.annotation.*;
+import org.springframework.data.jpa.domain.support.*;
+
+@EntityListeners(AuditingEntityListener.class)
+@Entity
+@Table(name = "user")
 public class User {
     public static final GuestUser GUEST_USER = new GuestUser();
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String userId;
-    private String password;
-    private String name;
+
+    @CreatedDate
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(length = 50)
     private String email;
+
+    @Column(length = 20, nullable = false)
+    private String name;
+
+    @Column(length = 20, nullable = false)
+    private String password;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
+    @Column(length = 20, nullable = false)
+    private String userId;
 
     private User() {
     }
