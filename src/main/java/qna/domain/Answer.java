@@ -3,14 +3,39 @@ package qna.domain;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
+import java.time.*;
 import java.util.Objects;
 
+import javax.persistence.*;
+import javax.persistence.Id;
+
+import org.springframework.data.annotation.*;
+import org.springframework.data.jpa.domain.support.*;
+
+@EntityListeners(AuditingEntityListener.class)
+@Entity
+@Table(name = "answer")
 public class Answer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long writerId;
-    private Long questionId;
+
+    @Lob
     private String contents;
+
+    @CreatedDate
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
     private boolean deleted = false;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
+    private Long writerId;
+
+    private Long questionId;
 
     public Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);
